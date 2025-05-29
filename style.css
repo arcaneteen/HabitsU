@@ -1,0 +1,102 @@
+body{
+    background-image:url("piche_dekho.jpg");
+    background-size: 72%;
+    background-color: rgb(217, 168, 175);
+    background-blend-mode: soft-dark;
+    text-align: center;
+    font-family: 'Chavezlafia Butter', sans-serif;
+    font-size: larger;
+}
+#title{
+    margin-top:100px;
+     line-height: 10px; /*dist. b/w line of text */
+}
+#subtitle{
+    opacity:0.8;
+    font-size:22px;
+    margin-bottom:20px;
+}
+#container{
+    display:flex;
+    justify-content: end;/*align items to start of the container*/
+}
+#div{
+    background-color: aliceblue;
+    border-radius: 10px 10px 10px 10px;
+    margin: auto;
+    align-content: center;
+    /* width:75%; */
+    
+}
+#heading{
+    font-size: 20px;
+    color:rgb(144, 11, 95);
+    font-weight: bolder;
+    display:flex;
+    justify-content: space-between;/*can only use with display flex*/
+    border-radius: 10px 10px 0px 0px;
+    border:2px solid black;
+    padding:0px 20px;
+    background-color: rgb(230, 152, 122);
+    line-height: 0px;
+}
+#content{
+    padding:20px;
+    border:2px solid gray;
+    border-radius:0px 0px 12px 12px; 
+    /* t r b l */
+}
+.days{
+    display:flex;
+
+}
+.day{
+    width:30px;
+    margin:3px;
+    padding:10px;
+    font-size:16px;
+    text-align: center;
+    border-radius: 20px;
+    border:2px solid bisque;
+    background-color: lavender;
+}
+.day:hover {
+    background-color: #d0eaff;
+}
+
+.completed {
+    background-color: #2ecc71 !important;
+    color: white;
+}
+
+#reset {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#reset:hover {
+    background-color: #c0392b;
+}
+.day {
+    transition: all 0.3s ease;
+  }
+  
+  .day.completed {
+    transform: scale(1.1);
+    background-color: #2ecc71 !important;
+    color: white;
+    box-shadow: 0 0 10px rgba(0, 128, 0, 0.5);
+  }
+  
+  .day.completed:active {
+    transform: scale(0.95);
+  }
+  
+  
