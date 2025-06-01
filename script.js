@@ -1,125 +1,157 @@
-// Get the date
-var date = new Date();
-var currMonth = date.getMonth();
-var currDate = date.getDate();
-var currYear = date.getFullYear();
+let currentDate = new Date();
+let todos = JSON.parse(localStorage.getItem('todos')) || {};
+let diaryEntries = JSON.parse(localStorage.getItem('diaryEntries')) || [];
 
-// Set month title
-var months = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-];
-document.getElementById("title").innerText = months[currMonth];
+function renderCalendar() {
+    const calendar = document.getElementById('calendar');
+    const monthYear = document.getElementById('monthYear');
+    calendar.innerHTML = '';
 
-// Constants for localStorage keys (unique per month and year)
-const habitTitleKey = `habitTitle-${currMonth}-${currYear}`;
-const completedDaysKey = `completedDays-${currMonth}-${currYear}`;
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    const firstDay = new Date(year, month, 1).getDay();
+    const lastDate = new Date(year, month + 1, 0).getDate();
 
-// Set and update habit title on click
-var habitTitle = document.getElementById("habitTitle");
+    monthYear.textContent = `${currentDate.toLocaleString('default', { month: 'long' })} ${year}`;
 
-// Load saved habit title if exists
-if (localStorage.getItem(habitTitleKey)) {
-  habitTitle.innerText = localStorage.getItem(habitTitleKey);
-} else {
-  habitTitle.innerText = "Click to Set Your habit";
-}
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    days.forEach(day => {
+        const dayHeader = document.createElement('div');
+        dayHeader.className = 'header';
+        dayHeader.textContent = day;
+        calendar.appendChild(dayHeader);
+    });
 
-habitTitle.onclick = function () {
-  let habits = prompt("What's your Habit", habitTitle.innerText);
-  if (habits === null || habits.trim().length === 0) {
-    habitTitle.innerText = "Click to Set Your habit";
-    localStorage.removeItem(habitTitleKey); // remove from storage if cleared
-  } else {
-    habitTitle.innerText = habits;
-    localStorage.setItem(habitTitleKey, habits); // save habit title
-  }
-};
+    for (let i = 0; i < firstDay; i++) {
+        const emptyDay = document.createElement('div');
+        calendar.appendChild(emptyDay);
+    }
 
-// Set the total days for current month (consider leap year)
-var dayInMonths = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    for (let i = 1; i <= lastDate; i++) {
+        const day = document.createElement('div');
+        day.className = 'day';
+        day.textContent = i;
 
-// Leap year check for February
-if (currMonth === 1 && ((currYear % 4 === 0 && currYear % 100 !== 0) || currYear % 400 === 0)) {
-  dayInMonths[1] = 29;
-}
-var dayInThisMonth = dayInMonths[currMonth];
-
-// Track completed days and total days element
-var totalDays = document.getElementById("totalDays");
-
-// Load completed days from localStorage or initialize empty array
-var completedDays = JSON.parse(localStorage.getItem(completedDaysKey)) || [];
-
-// Setup the calendar days
-let dayCounter = 1;
-const dayContainers = document.getElementsByClassName("days");
-
-for (let i = 0; i < dayContainers.length; i++) {
-  const days = dayContainers[i].getElementsByClassName("day");
-  for (let j = 0; j < days.length; j++) {
-    if (dayCounter <= dayInThisMonth) {
-      days[j].innerText = dayCounter;
-      days[j].classList.add("active-day");
-
-      // If this day is in completedDays, add 'completed' class
-      if (completedDays.includes(dayCounter)) {
-        days[j].classList.add("completed");
-      }
-
-      // Add click event to toggle completion
-      days[j].onclick = function () {
-        const clickedDay = parseInt(this.innerText);
-        this.classList.toggle("completed");
-
-        // Update completedDays array
-        if (this.classList.contains("completed")) {
-          if (!completedDays.includes(clickedDay)) {
-            completedDays.push(clickedDay);
-          }
-        } else {
-          completedDays = completedDays.filter(day => day !== clickedDay);
+        const dateStr = `${year}-${month + 1}-${i}`;
+        const todayTodos = todos[dateStr] || [];
+        const completedTodos = todayTodos.filter(todo => todo.completed).length;
+        if (completedTodos >= 2) {
+            day.classList.add('completed');
         }
 
-        // Save updated completedDays array in localStorage
-        localStorage.setItem(completedDaysKey, JSON.stringify(completedDays));
+        const today = new Date();
+        if (i === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+            day.classList.add('today');
+        }
 
-        // Update the progress display
-        updateProgress();
-      };
-
-      dayCounter++;
-    } else {
-      days[j].style.visibility = "hidden"; // Hide extra boxes for days not in this month
+        calendar.appendChild(day);
     }
-  }
 }
 
-// Update progress display
-function updateProgress() {
-  // Update daysCompleted count from current completed days in DOM
-  let daysCompleted = document.querySelectorAll(".day.completed").length;
-  totalDays.innerText = `${daysCompleted}/${dayInThisMonth}`;
+function addTodo() {
+    const todoInput = document.getElementById('todoInput');
+    const todoText = todoInput.value.trim();
+    if (todoText) {
+        const today = new Date();
+        const dateStr = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+        if (!todos[dateStr]) {
+            todos[dateStr] = [];
+        }
+        todos[dateStr].push({ text: todoText, completed: false });
+        localStorage.setItem('todos', JSON.stringify(todos));
+        todoInput.value = '';
+        renderTodos();
+        renderCalendar();
+    }
 }
 
-// Initialize progress display on page load
-updateProgress();
+function toggleTodo(dateStr, index) {
+    if (todos[dateStr] && todos[dateStr][index]) {
+        todos[dateStr][index].completed = !todos[dateStr][index].completed;
+        localStorage.setItem('todos', JSON.stringify(todos));
+        renderTodos();
+        renderCalendar();
+    }
+}
 
-// Reset button clears completed days and habit title in localStorage and UI
-document.getElementById("reset").onclick = function () {
-  // Remove completed class from all days
-  const activeDays = document.querySelectorAll(".day.completed");
-  activeDays.forEach(day => day.classList.remove("completed"));
+function deleteTodo(dateStr, index) {
+    if (todos[dateStr]) {
+        todos[dateStr].splice(index, 1);
+        if (todos[dateStr].length === 0) {
+            delete todos[dateStr];
+        }
+        localStorage.setItem('todos', JSON.stringify(todos));
+        renderTodos();
+        renderCalendar();
+    }
+}
 
-  // Clear completed days array and localStorage
-  completedDays = [];
-  localStorage.removeItem(completedDaysKey);
+function renderTodos() {
+    const todoItems = document.getElementById('todoItems');
+    todoItems.innerHTML = '';
+    const today = new Date();
+    const dateStr = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+    const todayTodos = todos[dateStr] || [];
 
-  // Reset habit title UI and localStorage
-  habitTitle.innerText = "Click to Set Your habit";
-  localStorage.removeItem(habitTitleKey);
+    todayTodos.forEach((todo, index) => {
+        const li = document.createElement('li');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = todo.completed;
+        checkbox.onclick = () => toggleTodo(dateStr, index);
+        const span = document.createElement('span');
+        span.textContent = todo.text;
+        if (todo.completed) {
+            span.style.textDecoration = 'line-through';
+        }
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.onclick = () => deleteTodo(dateStr, index);
+        li.appendChild(checkbox);
+        li.appendChild(span);
+        li.appendChild(deleteButton);
+        todoItems.appendChild(li);
+    });
+}
 
-  // Update progress
-  updateProgress();
-};
+function addDiaryEntry() {
+    const diaryInput = document.getElementById('diaryInput');
+    const entry = diaryInput.value.trim();
+    if (entry) {
+        diaryEntries.push({ text: entry, date: new Date().toLocaleDateString() });
+        localStorage.setItem('diaryEntries', JSON.stringify(diaryEntries));
+        diaryInput.value = '';
+        renderDiary();
+    }
+}
 
+function renderDiary() {
+    const diaryEntriesList = document.getElementById('diaryEntries');
+    diaryEntriesList.innerHTML = '';
+    diaryEntries.forEach((entry, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `${entry.date}: ${entry.text} <button onclick="deleteDiaryEntry(${index})">Delete</button>`;
+        diaryEntriesList.appendChild(li);
+    });
+}
+
+function deleteDiaryEntry(index) {
+    diaryEntries.splice(index, 1);
+    localStorage.setItem('diaryEntries', JSON.stringify(diaryEntries));
+    renderDiary();
+}
+
+function prevMonth() {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar();
+}
+
+function nextMonth() {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar();
+}
+
+// Initial render
+renderCalendar();
+renderTodos();
+renderDiary();

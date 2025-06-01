@@ -3,75 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HabitTracker</title>
-    <link rel="icon" type="image/x-icon" href="fool.jpg">
+    <title>HabitsU - Kawaii To-Do & Goals</title>
     <link href="https://fonts.cdnfonts.com/css/chavezlafia-butter" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">          
+    <link href="https://fonts.cdnfonts.com/css/cakecafe" rel="stylesheet">
+                
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1 id="title">Month</h1>
-    <h2 id="subtitle">Monthly Habit Tracker</h2>
-
-    <div id="container">
-        <div id="div">
-            <div id="heading">
-                <p id="habitTitle">My New Habit</p>
-                <p id="totalDays">0/31</p>
+    <div class="container">
+        <div class="todo-list">
+            <h2>✨ To-Do List ✨</h2>
+            <div class="todo-input">
+                <input type="text" id="todoInput" placeholder="Add a cute task!">
+                <button onclick="addTodo()">Add</button>
             </div>
-            <div id="content">
-                <div id="tracker">
-                    <div class="days">
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                    </div>
-                    <div class="days">
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                    </div>
-                    <div class="days">
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                    </div>
-                    <div class="days">
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                    </div>
-                    <div class="days">
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                        <div class="day">1</div>
-                    </div>
-
-                </div>
-            </div>
+            <ul class="todo-items" id="todoItems"></ul>
         </div>
-        
+        <div class="calendar-container">
+            <header>
+                <h1>🌸 HabitsU 🌸</h1>
+            </header>
+            <nav>
+                <button onclick="prevMonth()">Previous</button>
+                <h2 id="monthYear"></h2>
+                <button onclick="nextMonth()">Next</button>
+            </nav>
+            <div class="calendar" id="calendar"></div>
+        </div>
+        <div class="diary">
+            <h2>📖 My Goals 📖</h2>
+            <div class="diary-input">
+                <input type="text" id="diaryInput" placeholder="Write your target goal!">
+                <button onclick="addDiaryEntry()">Add</button>
+            </div>
+            <ul class="diary-entries" id="diaryEntries"></ul>
+        </div>
     </div>
-    <button id="reset">Reset Button</button>
+    
+    <script src="script.js"></script>
 </body>
-<script src="script.js"></script>
+
 </html>

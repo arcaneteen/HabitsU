@@ -1,102 +1,257 @@
-body{
-    background-image:url("piche_dekho.jpg");
-    background-size: 72%;
-    background-color: rgb(217, 168, 175);
-    background-blend-mode: soft-dark;
-    text-align: center;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Cakecafe', sans-serif;
     font-family: 'Chavezlafia Butter', sans-serif;
-    font-size: larger;
+                                                    
 }
-#title{
-    margin-top:100px;
-     line-height: 10px; /*dist. b/w line of text */
-}
-#subtitle{
-    opacity:0.8;
-    font-size:22px;
-    margin-bottom:20px;
-}
-#container{
-    display:flex;
-    justify-content: end;/*align items to start of the container*/
-}
-#div{
-    background-color: aliceblue;
-    border-radius: 10px 10px 10px 10px;
-    margin: auto;
-    align-content: center;
-    /* width:75%; */
-    
-}
-#heading{
-    font-size: 20px;
-    color:rgb(144, 11, 95);
-    font-weight: bolder;
-    display:flex;
-    justify-content: space-between;/*can only use with display flex*/
-    border-radius: 10px 10px 0px 0px;
-    border:2px solid black;
-    padding:0px 20px;
-    background-color: rgb(230, 152, 122);
-    line-height: 0px;
-}
-#content{
-    padding:20px;
-    border:2px solid gray;
-    border-radius:0px 0px 12px 12px; 
-    /* t r b l */
-}
-.days{
-    display:flex;
 
+body {
+    background-color: #ffe6f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-image: url("piche_dekho.jpg");
+    background-size: cover;
+    background-position: center;
 }
-.day{
-    width:30px;
-    margin:3px;
-    padding:10px;
-    font-size:16px;
+
+.container {
+    display: flex;
+    gap: 20px;
+    max-width: 1000px;
+    width: 100%;
+    align-items: flex-start;
+}
+
+.todo-list {
+    width: 30%;
+    background-color: #fff0f5;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ff99cc;
+}
+
+.todo-list h2 {
+    font-size: 1.2em;
+    color: #ff66a3;
+    margin-bottom: 10px;
     text-align: center;
-    border-radius: 20px;
-    border:2px solid bisque;
-    background-color: lavender;
-}
-.day:hover {
-    background-color: #d0eaff;
 }
 
-.completed {
-    background-color: #2ecc71 !important;
-    color: white;
+.todo-input {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
 }
 
-#reset {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #e74c3c;
+.todo-input input {
+    flex: 1;
+    padding: 6px;
+    border: 1px solid #ff99cc;
+    border-radius: 8px;
+    font-size: 0.9em;
+    background-color: #fff;
+}
+
+.todo-input button {
+    padding: 6px 10px;
+    background-color: #ff66a3;
     color: white;
     border: none;
-    border-radius: 10px;
-    font-size: 1em;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 0.8em;
 }
 
-#reset:hover {
-    background-color: #c0392b;
+.todo-input button:hover {
+    background-color: #ff3385;
 }
-.day {
-    transition: all 0.3s ease;
-  }
-  
-  .day.completed {
-    transform: scale(1.1);
-    background-color: #2ecc71 !important;
+
+.todo-items {
+    list-style: none;
+}
+
+.todo-items li {
+    display: flex;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #ffe6f0;
+    color: #333;
+}
+
+.todo-items li input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.todo-items li span {
+    flex: 1;
+}
+
+.todo-items li button {
+    background-color: #ff3385;
     color: white;
-    box-shadow: 0 0 10px rgba(0, 128, 0, 0.5);
-  }
-  
-  .day.completed:active {
-    transform: scale(0.95);
-  }
-  
-  
+    border: none;
+    border-radius: 8px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 0.7em;
+}
+
+.todo-items li button:hover {
+    background-color: #cc0066;
+}
+
+.calendar-container {
+    width: 40%;
+    background-color: #fff0f5;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ff99cc;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 1.5em;
+    color: #ff66a3;
+    text-shadow: 1px 1px #ffccff;
+    margin-bottom: 10px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+nav button {
+    padding: 6px 10px;
+    background-color: #ff66a3;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.8em;
+}
+
+nav button:hover {
+    background-color: #ff3385;
+}
+
+nav h2 {
+    font-size: 1em;
+    color: #ff66a3;
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+}
+
+.calendar div {
+    padding: 6px;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 0.8em;
+}
+
+.calendar .day {
+    background-color: #fff;
+    cursor: default;
+}
+
+.calendar .day.completed {
+    background-color: #66cc99;
+    color: white;
+}
+
+.calendar .today {
+    border: 2px solid #ff66a3;
+}
+
+.calendar .header {
+    background-color: #ff99cc;
+    color: white;
+    font-weight: bold;
+}
+
+.diary {
+    width: 30%;
+    background-color: #fff0f5;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ff99cc;
+}
+
+.diary h2 {
+    font-size: 1.2em;
+    color: #ff66a3;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.diary-input {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.diary-input input {
+    flex: 1;
+    padding: 6px;
+    border: 1px solid #ff99cc;
+    border-radius: 8px;
+    font-size: 0.9em;
+    background-color: #fff;
+}
+
+.diary-input button {
+    padding: 6px 10px;
+    background-color: #ff66a3;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.8em;
+}
+
+.diary-input button:hover {
+    background-color: #ff3385;
+}
+
+.diary-entries {
+    list-style: none;
+}
+
+.diary-entries li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #ffe6f0;
+    color: #333;
+    font-size: 0.9em;
+}
+
+.diary-entries li button {
+    background-color: #ff3385;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 0.7em;
+    font-family: 'Chavezlafia Butter', sans-serif;
+}
+
+.diary-entries li button:hover {
+    background-color: #cc0066;
+}
