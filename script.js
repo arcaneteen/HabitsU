@@ -128,11 +128,17 @@ function addDiaryEntry() {
 function renderDiary() {
     const diaryEntriesList = document.getElementById('diaryEntries');
     diaryEntriesList.innerHTML = '';
-    diaryEntries.forEach(entry => {
+    diaryEntries.forEach((entry, index) => {
         const li = document.createElement('li');
-        li.textContent = `${entry.date}: ${entry.text}`;
+        li.innerHTML = `${entry.date}: ${entry.text} <button onclick="deleteDiaryEntry(${index})">Delete</button>`;
         diaryEntriesList.appendChild(li);
     });
+}
+
+function deleteDiaryEntry(index) {
+    diaryEntries.splice(index, 1);
+    localStorage.setItem('diaryEntries', JSON.stringify(diaryEntries));
+    renderDiary();
 }
 
 function prevMonth() {

@@ -232,8 +232,26 @@ nav h2 {
 }
 
 .diary-entries li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 6px 0;
     border-bottom: 1px solid #ffe6f0;
     color: #333;
     font-size: 0.9em;
+}
+
+.diary-entries li button {
+    background-color: #ff3385;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 0.7em;
+    font-family: 'Chavezlafia Butter', sans-serif;
+}
+
+.diary-entries li button:hover {
+    background-color: #cc0066;
 }
